@@ -36,3 +36,109 @@ class IEnemy(ABC):
     
     def is_alive(self) -> bool:
         return self.current_hp > 0 # Verifie si l'ennemi est encore en vie
+    
+
+    
+class LoupSauvage(IEnemy):    
+    def __init__(self):
+        super().__init__(
+            name="Loup sauvage",
+            pv=50,
+            enemy_type=EnemyType.Loup_sauvage,
+            description="Un loup féroce aux yeux rouges."
+        )
+        self.attack_power = 15
+    
+    def spawn(self, zone):
+        super().spawn(zone)
+    
+    def attack(self, target):
+        damage = self.attack_power
+        print(f"{self.name} mord {target.name} pour {damage} dégâts!")
+        return damage
+
+
+class Bandit(IEnemy):    
+    def __init__(self):
+        super().__init__(
+            name="Bandit",
+            pv=60,
+            enemy_type=EnemyType.Bandit,
+            description="Un voleur sans scrupules."
+        )
+        self.attack_power = 18
+    
+    def spawn(self, zone):
+        super().spawn(zone)
+    
+    def attack(self, target):
+        damage = self.attack_power
+        print(f"{self.name} attaque {target.name} avec sa dague pour {damage} dégâts!")
+        return damage
+
+
+class Squelette(IEnemy):    
+    def __init__(self):
+        super().__init__(
+            name="Squelette",
+            pv=70,
+            enemy_type=EnemyType.Squelette,
+            description="Ossements animés par magie noire."
+        )
+        self.attack_power = 12
+    
+    def spawn(self, zone):
+        super().spawn(zone)
+    
+    def attack(self, target):
+        damage = self.attack_power
+        print(f"{self.name} frappe {target.name} pour {damage} dégâts!")
+        return damage
+
+
+class ChampionCorrompu(IEnemy):    
+    def __init__(self):
+        super().__init__(
+            name="Champion corrompu",
+            pv=150,
+            enemy_type=EnemyType.Champion_corrompu,
+            description="Guerrier d'élite corrompu par les ténèbres."
+        )
+        self.attack_power = 30
+    
+    def spawn(self, zone):
+        super().spawn(zone)
+    
+    def attack(self, target):
+        damage = self.attack_power
+        print(f"{self.name} frappe puissamment {target.name} pour {damage} dégâts!")
+        return damage
+
+
+class GardienDonjon(IEnemy):    
+    def __init__(self):
+        super().__init__(
+            name="Gardien du donjon",
+            pv=300,
+            enemy_type=EnemyType.Gardien_donjon,
+            description="Gardien ancestral du donjon. Devient furieux à mi-combat."
+        )
+        self.attack_power = 40
+        self.phase = 1
+    
+    def spawn(self, zone):
+        super().spawn(zone)
+    
+    def attack(self, target):
+        # Phase 2 si moins de 50% HP
+        if self.current_hp < self.pv / 2 and self.phase == 1:
+            self.phase = 2
+            print(f"\n⚡ {self.name} entre en PHASE 2!")
+            self.attack_power = 55
+        
+        damage = self.attack_power
+        phase_text = " avec FUREUR" if self.phase == 2 else ""
+        print(f"{self.name} attaque{phase_text} {target.name} pour {damage} dégâts!")
+        return damage
+
+
