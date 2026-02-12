@@ -1,7 +1,7 @@
 
 from typing import List
 
-from items import Item
+from models.items import Item
 
 
 class Character:
@@ -10,16 +10,11 @@ class Character:
 
 class Player(Character):
 
-    def __init__(self, name, x=0, y=0):
-        self.name = name
-        self.x = x
-        self.y = y
-        self.inventory: List[Item] = []
+    def __init__(self, name):
+            self.name = name
+            self.current_zone = None
 
-    def move(self, dx, dy):
-        self.x += dx
-        self.y += dy
-        print(f"[{self.name}] Position actuelle : (x={self.x}, y={self.y})")
+
     
     def useItem(self, item: Item):
         if item in self.inventory:
