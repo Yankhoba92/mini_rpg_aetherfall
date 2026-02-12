@@ -98,7 +98,36 @@ class Donjon(Zone):
         return False
     
     def next_room(self):
-        """Passe à la salle suivante"""
         self.current_room += 1
         print(f"Vous avancez... Salle {self.current_room}/{self.total_rooms}")
+
+class ZoneManager:    
+    def __init__(self):
+        self.zones = {
+            ZoneType.VILLAGE: Village(),
+            ZoneType.FORET: Foret(),
+            ZoneType.DONJON: Donjon()
+        }
+        self.current_zone = self.zones[ZoneType.VILLAGE]
+    
+    def get_current_zone(self) -> Zone:
+        return self.current_zone
+    
+    def change_zone(self, zone_type: ZoneType, player) -> bool:
+        new_zone = self.zones.get(zone_type)
+        
+        if not new_zone:
+            print("Zone inconnue!")
+            return False
+        
+        if not new_zone.can_access(player):
+            return False
+        
+        self.current_zone = new_zone
+        print(f"\n Vous voyagez vers {new_zone.name}")
+        print(f" {new_zone.description}\n")
+        return True
+    
+    def explore(self):
+        return self.current_zone.trigger_random_event()
 
