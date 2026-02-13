@@ -48,5 +48,13 @@ class Donjon(Zone):
         else:
             print("Vous êtes devant la salle du Boss !")
 
-    def can_acces(self, player):
-        return True
+   
+    def can_access(self, player) -> bool:
+        if hasattr(player, 'inventory'):
+            for item in player.inventory:
+                if item == "Clé du Donjon":
+                    return True
+            print("Vous avez besoin de la Clé du Donjon!")
+            return False
+        return False
+    
