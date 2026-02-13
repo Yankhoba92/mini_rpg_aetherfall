@@ -50,6 +50,8 @@ class CombatEvent(Event):
                 print(f"{player.name} attaque {self.enemy_type.name} pour {damage} dégâts!")
                 self.enemy_type.take_damage(damage)
                 if not self.enemy_type.is_alive():
+                    player.argent += self.enemy_type.argent
+                    print(f"{player.name} gagne {self.enemy_type.argent} pièces d'or! (Or total: {player.argent})")
                     print(f"{self.enemy_type.name} est vaincu!")
                     break
 

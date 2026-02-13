@@ -16,12 +16,13 @@ class EnemyType(Enum):
 
 #  INTERFACE IENEMY 
 class IEnemy(ABC):    
-    def __init__(self, name: str, pv: int, enemy_type: EnemyType, description: str):
+    def __init__(self, name: str, pv: int, enemy_type: EnemyType, description: str, argent: int = 10):
         self.name = name
         self.pv = pv
         self.type = enemy_type
         self.description = description
         self.current_hp = pv
+        self.argent = argent
     
     @abstractmethod
     def spawn(self, zone):
@@ -74,7 +75,8 @@ class Bandit(IEnemy):
             name="Bandit",
             pv=60,
             enemy_type=EnemyType.Bandit,
-            description="Un voleur sans scrupules."
+            description="Un voleur sans scrupules.",
+            argent=15
         )
         self.attack_power = 18
     
@@ -96,7 +98,8 @@ class Squelette(IEnemy):
             name="Squelette",
             pv=70,
             enemy_type=EnemyType.Squelette,
-            description="Ossements animés par magie noire."
+            description="Ossements animés par magie noire.",
+            argent=20
         )
         self.attack_power = 12
     
@@ -118,7 +121,8 @@ class ChampionCorrompu(IEnemy):
             name="Champion corrompu",
             pv=150,
             enemy_type=EnemyType.Champion_corrompu,
-            description="Guerrier d'élite corrompu par les ténèbres."
+            description="Guerrier d'élite corrompu par les ténèbres.",
+            argent=50
         )
         self.attack_power = 30
     
@@ -140,7 +144,8 @@ class GardienDonjon(IEnemy):
             name="Gardien du donjon",
             pv=300,
             enemy_type=EnemyType.Gardien_donjon,
-            description="Gardien ancestral du donjon. Devient furieux à mi-combat."
+            description="Gardien ancestral du donjon. Devient furieux à mi-combat.",
+            argent=75
         )
         self.attack_power = 40
         self.phase = 1
