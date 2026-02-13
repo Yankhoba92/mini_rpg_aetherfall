@@ -25,17 +25,17 @@ class Event(ABC):
         return self.description
 
 class CombatEvent(Event):
-    def __init__(self, enemy_type, description):
+    def __init__(self, enemy_type):
         super().__init__(
             event_type = EventType.COMBAT,
-            description = f"Un {enemy_type} vous attaque!")
+            description = f"Un {enemy_type.name} vous attaque!")
         self.enemy_type = enemy_type
         
     def trigger(self, player):
         print(f"Le joueur {player.name} apparait")
-        factory = EnemyFactory()
-        enemy = factory.create_enemy(self.enemy_type)
-        return enemy
+        self.enemy_type.attack(player)
+        
+        return self.enemy_type
 
 class CoffreEvent(Event):
     def __init__(self, recompense: None):

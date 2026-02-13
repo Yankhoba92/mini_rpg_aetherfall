@@ -3,7 +3,7 @@
 from models.character import Guerrier, Mage, Player
 from models.zone import Donjon, Foret, Village, Zone
 from patterns.command import Deplacer, Invoker
-from patterns.enemy import EnemyType
+from patterns.enemy import EnemyFactory, EnemyType
 from patterns.event import CoffreEvent, CombatEvent, MarchandEvent
 
 
@@ -19,7 +19,9 @@ class FacadeInterface:
         
         self.recompense = "Clé du Donjon"
         
-        self.event1 = CombatEvent(EnemyType.Bandit, "Un bandit surgit des buissons!")
+        self.randomEnemeny = EnemyFactory().create_random_enemy()
+        
+        self.event1 = CombatEvent(self.randomEnemeny)
         self.event2 = CoffreEvent(self.recompense)
         self.event3 = MarchandEvent()
         
@@ -52,6 +54,7 @@ class FacadeInterface:
             print(current.description)
             
             current.random_event(self.player)
+            
 
             sorties = ", ".join(current.connected_zones.keys())
             print(f"Sorties : {sorties}")

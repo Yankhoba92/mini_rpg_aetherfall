@@ -1,5 +1,6 @@
 from enum import Enum
 from abc import ABC, abstractmethod
+import random
 class EnemyType(Enum):
     Loup_sauvage = "loup_sauvage"
     Bandit = "bandit"
@@ -159,6 +160,11 @@ class EnemyFactory:
             return enemy_class()
         else:
             raise ValueError(f"Type d'ennemi inconnu: {enemy_type}")
+        
+    def create_random_enemy(self):
+        
+        enemy_type = random.choice(list(self.enemy_types.keys()))
+        return self.create_enemy(enemy_type)
         
     def register_enemy(self, enemy_type, enemy_class):
         self.enemy_types[enemy_type] = enemy_class
