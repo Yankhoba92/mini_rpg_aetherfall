@@ -55,11 +55,11 @@ class FacadeInterface:
 
             sorties = ", ".join(current.connected_zones.keys())
             print(f"Sorties : {sorties}")
-            choix = input("Action (direction, inventaire 'quitter') : ").lower()
+            choix = input("Action (direction, inventaire(i) 'quitter(q)') : ").lower()
 
-            if choix == "quitter":
+            if choix == "quitter" or choix == "q":
                 break
-            elif choix == "inventaire":
+            elif choix == "inventaire" or choix == "i":
                 print(f"Inventaire de {self.player.name} : {[item.name for item in self.player.inventory]}")
             elif choix in current.connected_zones:
                 cmd = Deplacer(self.player, choix)
