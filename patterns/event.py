@@ -2,6 +2,7 @@ from enum import Enum
 from abc import ABC, abstractmethod
 import random
 
+from models.character import CompetenceFactory
 from models.items import ItemFactory
 from patterns.enemy import EnemyFactory
 
@@ -33,6 +34,7 @@ class CombatEvent(Event):
 
         
     def trigger(self, player):
+        initial_defense = player.defense
         print(f"Le joueur {player.name} apparait")
         while self.enemy_type.is_alive() and player.pv > 0: 
 
@@ -52,12 +54,29 @@ class CombatEvent(Event):
                     break
 
             elif choix == "2":
-                print("lmao")
+                competence = input("Choisir l'une de vos compétences (1 ou 2): ")
+                
+                if(competence not in ["1", "2"]):
+                    print("Compétence invalide, essayez à nouveau.")
+                    continue
+                # else:
+                #     player.useSkill(CompetenceFactory player.competences[int(competence)-1], self.enemy_type)
+             
+                
+                
+                
+                
+                
+                
             elif choix == "3":
                 print("lmao")
             elif choix == "4":
                 print(f"{player.name} se prépare à défendre.")
-        
+                player.defense += 5
+            else:
+                print("Action invalide, essayez à nouveau.")
+                
+        player.defense = initial_defense
         return self.enemy_type
 
 class CoffreEvent(Event):

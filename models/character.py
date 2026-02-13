@@ -21,6 +21,8 @@ class Player(Character):
             self.classe = classe
             self.current_zone = None
             
+            self.conpetences = []
+            
 
 
     
@@ -44,6 +46,8 @@ class Player(Character):
     
     def useSkill2(self, skill, cible: IEnemy):
         print(f"{self.name} a utilisé la compétence {skill.name} sur {cible.name}!")
+        
+    
 
     def getClasse(self):
         return self.classe
@@ -80,6 +84,17 @@ class Player(Character):
             exit()
         
 
+class skill:
+    def __init__(self, name: str, damage: int, magic_damage: int = 0):
+        self.name = name
+        self.damage = damage
+        self.magic_damage = magic_damage
+        
+class CompetenceFactory:
+    @staticmethod
+    def createCompetence(name: str, damage: int, magic_damage: int = 0):
+        return skill(name, damage, magic_damage)
+
 class Guerrier(Player):    
     def __init__(self, name):
         super().__init__(name, "Guerrier")
@@ -91,6 +106,8 @@ class Guerrier(Player):
 
         self.defense = 15
         self.inventory = []
+        
+        self.competences = ["Coup puissant", "Frappe tourbillon"]
 
 class Mage(Player):
     def __init__(self, name):
@@ -103,6 +120,8 @@ class Mage(Player):
         self.magic_force = 30
         self.taux_critique = 1
         self.inventory = []
+        
+        self.competences = ["Boule de feu", "Soin"]
 
 class Voleur(Player):
     def __init__(self, name):
@@ -115,6 +134,7 @@ class Voleur(Player):
         self.taux_critique = 1.25
         self.inventory = []
         
+        self.competences = ["Attaque sournoise", "Esquive"]
         
 
 

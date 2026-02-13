@@ -60,7 +60,9 @@ class LoupSauvage(IEnemy):
         super().spawn(zone)
     
     def attack(self, target: Player):
-        damage = self.attack_power
+        damage = self.attack_power - target.defense
+        if damage < 0:
+            damage = 0
         print(f"{self.name} mord {target.name} pour {damage} dégâts!")
         target.take_damage(damage)
         return damage
@@ -80,7 +82,9 @@ class Bandit(IEnemy):
         super().spawn(zone)
     
     def attack(self, target: Player):
-        damage = self.attack_power
+        damage = self.attack_power - target.defense
+        if damage < 0:
+            damage = 0
         print(f"{self.name} attaque {target.name} avec sa dague pour {damage} dégâts!")
         target.take_damage(damage)
         return damage
@@ -100,7 +104,9 @@ class Squelette(IEnemy):
         super().spawn(zone)
     
     def attack(self, target: Player):
-        damage = self.attack_power
+        damage = self.attack_power - target.defense
+        if damage < 0:
+            damage = 0
         print(f"{self.name} frappe {target.name} pour {damage} dégâts!")
         target.take_damage(damage)
         return damage
@@ -120,7 +126,9 @@ class ChampionCorrompu(IEnemy):
         super().spawn(zone)
     
     def attack(self, target: Player):
-        damage = self.attack_power
+        damage = self.attack_power - target.defense
+        if damage < 0:
+            damage = 0
         print(f"{self.name} frappe puissamment {target.name} pour {damage} dégâts!")
         target.take_damage(damage)
         return damage
