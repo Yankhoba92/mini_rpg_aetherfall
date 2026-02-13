@@ -20,6 +20,7 @@ class Player(Character):
             self.name = name
             self.classe = classe
             self.current_zone = None
+            self.argent = 0
             
 
 
