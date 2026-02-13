@@ -17,7 +17,13 @@ class FacadeInterface:
         
         name_perso = input("Entrez votre nom de personnage : ")
         self.player = Player(name_perso)
-
+        print("Choisissez votre classe :")
+        print("1. Guerrier")
+        print("2. Mage")
+        print("3. Voleur")
+        classe_choix = input("Entrez le numéro de votre classe : ")
+        self.player = self.player.chooseClass(classe_choix)
+        
         self.player.current_zone = self.village
         self.invoker = Invoker()
         
@@ -25,7 +31,9 @@ class FacadeInterface:
    
     def run(self):
         print(f"Bienvenue dans Aetherfall, {self.player.name}.")
-        
+        print(f"Vous allez commencer votre aventure en tant que {self.player.classe}.\n")
+        print("PV:", self.player.pv)
+        print("Force:", self.player.force)
         while True:
             current = self.player.current_zone
             print(f"Position actuelle : {current.get_name()} \n")

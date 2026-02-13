@@ -3,6 +3,7 @@ from abc import ABC
 from typing import List
 
 from models.items import Item
+from patterns.enemy import IEnemy
 
 
 class Character:
@@ -11,8 +12,9 @@ class Character:
 
 class Player(Character):
 
-    def __init__(self, name):
+    def __init__(self, name, classe=None):
             self.name = name
+            self.classe = classe
             self.current_zone = None
             
 
@@ -32,11 +34,31 @@ class Player(Character):
     def takeItem(self, item: Item):
         self.inventory.append(item)
         print(f"{self.name} a pris {item.name}!")
+
+    def useSkill(self, skill, cible: IEnemy):
+        print(f"{self.name} a utilisé la compétence {skill.name} sur {cible.name}!")
+    
+    def useSkill2(self, skill, cible: IEnemy):
+        print(f"{self.name} a utilisé la compétence {skill.name} sur {cible.name}!")
+
+    def getClasse(self):
+        return self.classe
+
+    def chooseClass(self, class_choix):
+        if class_choix == "1":
+            return Guerrier(self.name)
+        elif class_choix == "2":
+            return Mage(self.name)
+        elif class_choix == "3":
+            return Voleur(self.name)
+        else:
+            print("Choix invalide, classe par défaut : Guerrier.")
+            return Guerrier(self.name)
         
 
 class Guerrier(Player):    
     def __init__(self, name):
-        super().__init__(name)
+        super().__init__(name, "Guerrier")
         self.pv = 150
         self.force = 20
         self.magie = 0
@@ -47,7 +69,7 @@ class Guerrier(Player):
 
 class Mage(Player):
     def __init__(self, name):
-        super().__init__(name)
+        super().__init__(name, "Mage")
         self.pv = 80
         self.force = 5
         self.magie = 40
@@ -58,7 +80,7 @@ class Mage(Player):
 
 class Voleur(Player):
     def __init__(self, name):
-        super().__init__(name)
+        super().__init__(name, "Voleur")
         self.pv = 100
         self.force = 15
         self.magie = 0
@@ -71,7 +93,7 @@ class Voleur(Player):
 
 
 if __name__ == "__main__":
-    player = Player("Hero")
+    player = Player("Hero", "Guerrier")
     potion = Item("potion", True)
     player.takeItem(potion)
     print(f"Inventaire de {player.name} : {[item.name for item in player.inventory]}")
