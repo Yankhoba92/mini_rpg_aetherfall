@@ -1,9 +1,13 @@
 
+from __future__ import annotations
+
 from abc import ABC
-from typing import List
+from typing import List, TYPE_CHECKING
 
 from models.items import Item
-from patterns.enemy import IEnemy
+
+if TYPE_CHECKING:
+    from patterns.enemy import IEnemy
 
 
 class Character:
@@ -56,10 +60,21 @@ class Player(Character):
             return Guerrier(self.name)
         
 
+    def take_damage(self, amount: int):
+        self.pv -= amount
+        if self.pv < 0:
+            self.pv = 0
+        print(f"{self.name} subit {amount} dégâts! (PV: {self.pv}/{self.max_pv})")
+        if self.pv <= 0:
+            print(f"{self.name} est mort!")
+            exit()
+        
+
 class Guerrier(Player):    
     def __init__(self, name):
         super().__init__(name, "Guerrier")
-        self.pv = 150
+        self.max_pv = 150
+        self.pv = self.max_pv
         self.force = 20
         self.magie = 0
         self.taux_critique = 1
@@ -70,7 +85,8 @@ class Guerrier(Player):
 class Mage(Player):
     def __init__(self, name):
         super().__init__(name, "Mage")
-        self.pv = 80
+        self.max_pv = 80
+        self.pv = self.max_pv
         self.force = 5
         self.magie = 40
         self.defense = 0
@@ -81,7 +97,8 @@ class Mage(Player):
 class Voleur(Player):
     def __init__(self, name):
         super().__init__(name, "Voleur")
-        self.pv = 100
+        self.max_pv = 100
+        self.pv = self.max_pv
         self.force = 15
         self.magie = 0
         self.defense = 10

@@ -1,6 +1,12 @@
+from __future__ import annotations
+
 from enum import Enum
 from abc import ABC, abstractmethod
 import random
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from models.character import Player
 class EnemyType(Enum):
     Loup_sauvage = "loup_sauvage"
     Bandit = "bandit"
@@ -53,9 +59,10 @@ class LoupSauvage(IEnemy):
     def spawn(self, zone):
         super().spawn(zone)
     
-    def attack(self, target):
+    def attack(self, target: Player):
         damage = self.attack_power
         print(f"{self.name} mord {target.name} pour {damage} dégâts!")
+        target.take_damage(damage)
         return damage
 
 
@@ -72,9 +79,10 @@ class Bandit(IEnemy):
     def spawn(self, zone):
         super().spawn(zone)
     
-    def attack(self, target):
+    def attack(self, target: Player):
         damage = self.attack_power
         print(f"{self.name} attaque {target.name} avec sa dague pour {damage} dégâts!")
+        target.take_damage(damage)
         return damage
 
 
@@ -91,9 +99,10 @@ class Squelette(IEnemy):
     def spawn(self, zone):
         super().spawn(zone)
     
-    def attack(self, target):
+    def attack(self, target: Player):
         damage = self.attack_power
         print(f"{self.name} frappe {target.name} pour {damage} dégâts!")
+        target.take_damage(damage)
         return damage
 
 
@@ -110,9 +119,10 @@ class ChampionCorrompu(IEnemy):
     def spawn(self, zone):
         super().spawn(zone)
     
-    def attack(self, target):
+    def attack(self, target: Player):
         damage = self.attack_power
         print(f"{self.name} frappe puissamment {target.name} pour {damage} dégâts!")
+        target.take_damage(damage)
         return damage
 
 
@@ -130,7 +140,7 @@ class GardienDonjon(IEnemy):
     def spawn(self, zone):
         super().spawn(zone)
     
-    def attack(self, target):
+    def attack(self, target: Player):
         # Phase 2 si moins de 50% HP
         if self.current_hp < self.pv / 2 and self.phase == 1:
             self.phase = 2
@@ -140,6 +150,7 @@ class GardienDonjon(IEnemy):
         damage = self.attack_power
         phase_text = " avec FUREUR" if self.phase == 2 else ""
         print(f"{self.name} attaque{phase_text} {target.name} pour {damage} dégâts!")
+        target.take_damage(damage)
         return damage
 
 

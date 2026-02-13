@@ -30,10 +30,33 @@ class CombatEvent(Event):
             event_type = EventType.COMBAT,
             description = f"Un {enemy_type.name} vous attaque!")
         self.enemy_type = enemy_type
+
         
     def trigger(self, player):
         print(f"Le joueur {player.name} apparait")
-        self.enemy_type.attack(player)
+        while self.enemy_type.is_alive() and player.pv > 0: 
+
+            self.enemy_type.attack(player)
+            print("1. Attaquer")
+            print("2. Compétences")
+            print("3. Objet")
+            print("4. Défendre")
+
+            choix = input("Choisissez une action: ")
+            if choix == "1":
+                damage = player.force
+                print(f"{player.name} attaque {self.enemy_type.name} pour {damage} dégâts!")
+                self.enemy_type.take_damage(damage)
+                if not self.enemy_type.is_alive():
+                    print(f"{self.enemy_type.name} est vaincu!")
+                    break
+
+            elif choix == "2":
+                print("lmao")
+            elif choix == "3":
+                print("lmao")
+            elif choix == "4":
+                print(f"{player.name} se prépare à défendre.")
         
         return self.enemy_type
 
