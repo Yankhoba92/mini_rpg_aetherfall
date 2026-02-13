@@ -59,6 +59,16 @@ class Player(Character):
             print("Choix invalide, classe par défaut : Guerrier.")
             return Guerrier(self.name)
         
+        
+    def get_stats(self):
+        return {
+            "PV": self.pv,
+            "Force": self.force,
+            "Magie": self.magie,
+            "Défense": self.defense,
+            "Taux de critique": self.taux_critique
+        } 
+        
 
     def take_damage(self, amount: int):
         self.pv -= amount

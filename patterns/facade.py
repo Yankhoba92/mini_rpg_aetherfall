@@ -5,6 +5,7 @@ from models.zone import Donjon, Foret, Village, Zone
 from patterns.command import Deplacer, Invoker
 from patterns.enemy import EnemyFactory, EnemyType
 from patterns.event import CoffreEvent, CombatEvent, MarchandEvent
+from patterns.memento import Caretaker, Originator
 
 
 class FacadeInterface:
@@ -42,6 +43,15 @@ class FacadeInterface:
         self.invoker = Invoker()
         
     
+        originator = Originator(self.player)
+        self.caretaker = Caretaker(originator)
+        
+        
+        
+        
+
+        
+    
    
     def run(self):
         print(f"Bienvenue dans Aetherfall, {self.player.name}.")
@@ -52,18 +62,26 @@ class FacadeInterface:
             current = self.player.current_zone
             print(f"Position actuelle : {current.get_name()} \n")
             
+            
             current.random_event(self.player)
             
             
 
             sorties = ", ".join(current.connected_zones.keys())
             print(f"Sorties : {sorties}")
-            choix = input("Action (direction, inventaire(i) 'quitter(q)') : ").lower()
+            choix = input("Action (direction, inventaire(i), 'quitter(q)'), sauvegarder(s) : ").lower()
 
             if choix == "quitter" or choix == "q":
+                try:
+                    self.caretaker.save_state()
+                except Exception:
+                    pass
                 break
             elif choix == "inventaire" or choix == "i":
                 print(f"Inventaire de {self.player.name} : {[item.name for item in self.player.inventory]}")
+            elif choix == "sauvegarde" or choix == "s":
+                self.caretaker.save_state()
+                print("Sauvegarde effectuée.")
             elif choix in current.connected_zones:
                 cmd = Deplacer(self.player, choix)
                 self.invoker.setCommand(cmd)
