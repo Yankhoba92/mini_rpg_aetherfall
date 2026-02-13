@@ -1,6 +1,6 @@
  
 
-from models.character import Player
+from models.character import Guerrier, Mage, Player
 from models.zone import Donjon, Foret, Village, Zone
 from patterns.command import Deplacer, Invoker
 
@@ -14,11 +14,15 @@ class FacadeInterface:
         self.village.add_connection("nord", self.foret)
         self.foret.add_connection("sud", self.village)
         self.foret.add_connection("nord", self.donjon)
+        
+        name_perso = input("Entrez votre nom de personnage : ")
+        self.player = Player(name_perso)
 
-        self.player = Player("Hero")
         self.player.current_zone = self.village
         self.invoker = Invoker()
-
+        
+    
+   
     def run(self):
         print(f"Bienvenue dans Aetherfall, {self.player.name}.")
         

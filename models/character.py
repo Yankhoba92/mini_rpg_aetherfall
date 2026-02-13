@@ -1,4 +1,5 @@
 
+from abc import ABC
 from typing import List
 
 from models.items import Item
@@ -13,6 +14,7 @@ class Player(Character):
     def __init__(self, name):
             self.name = name
             self.current_zone = None
+            
 
 
     
@@ -30,6 +32,43 @@ class Player(Character):
     def takeItem(self, item: Item):
         self.inventory.append(item)
         print(f"{self.name} a pris {item.name}!")
+        
+
+class Guerrier(Player):    
+    def __init__(self, name):
+        super().__init__(name)
+        self.pv = 150
+        self.force = 20
+        self.magie = 0
+        self.taux_critique = 1
+
+        self.defense = 15
+        self.inventory = []
+
+class Mage(Player):
+    def __init__(self, name):
+        super().__init__(name)
+        self.pv = 80
+        self.force = 5
+        self.magie = 40
+        self.defense = 0
+        self.magic_force = 30
+        self.taux_critique = 1
+        self.inventory = []
+
+class Voleur(Player):
+    def __init__(self, name):
+        super().__init__(name)
+        self.pv = 100
+        self.force = 15
+        self.magie = 0
+        self.defense = 10
+        self.taux_critique = 1.25
+        self.inventory = []
+        
+        
+
+
 
 if __name__ == "__main__":
     player = Player("Hero")
