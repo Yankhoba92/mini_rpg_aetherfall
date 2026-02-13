@@ -1,5 +1,6 @@
 from enum import Enum
 from abc import ABC, abstractmethod
+import random
 from enemy import EnemyFactory
 
 class EventType(Enum):
@@ -32,3 +33,26 @@ class CombatEvent(Event):
         factory = EnemyFactory()
         enemy = factory.create_enemy(self.enemy_type)
         return enemy
+
+class CoffreEvent(Event):
+    def __init__(self, recompense: None):
+        super().__init__(
+            event_type = EventType.COFFRE,
+            description = "Vous trouvez un coffre!"
+        )
+        self.recompense = recompense or self.recompense_random()
+        self.opened = False
+    
+    def trigger(self, player):
+        if not self.opened:
+            self.opened = True
+            print(f"Le coffre a été ouvert par {player.name}!")
+            return self.recompense
+        else:
+            print("Le coffre est déjà ouvert.")
+            return None
+    
+    def recompense_random(self):
+        items = ["Potion de soin", "Épée en fer", "Armure légère", "Anneau de force"]
+        return random.choice(items, random.randint(1, 3))
+    
