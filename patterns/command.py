@@ -26,7 +26,6 @@ class Deplacer(Command):
                 self._player.current_zone = next_zone
                 print(f"\n--- Vous entrez dans : {next_zone.get_name()} ---")
                 print(next_zone.description)
-                next_zone.random_event(self._player)
             else:
                 print("L'accès à cette zone est verrouillé.")
         else:

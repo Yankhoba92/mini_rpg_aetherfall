@@ -51,9 +51,9 @@ class FacadeInterface:
         while True:
             current = self.player.current_zone
             print(f"Position actuelle : {current.get_name()} \n")
-            print(current.description)
             
             current.random_event(self.player)
+            
             
 
             sorties = ", ".join(current.connected_zones.keys())
