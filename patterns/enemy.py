@@ -142,3 +142,23 @@ class GardienDonjon(IEnemy):
         return damage
 
 
+class EnemyFactory:
+    def __init__(self):
+        self.enemy_types = {
+            EnemyType.Loup_sauvage: LoupSauvage,
+            EnemyType.Bandit: Bandit,
+            EnemyType.Squelette: Squelette,
+            EnemyType.Champion_corrompu: ChampionCorrompu,
+            EnemyType.Gardien_donjon: GardienDonjon
+        }
+    
+
+    def create_enemy(self, enemy_type):
+        enemy_class = self.enemy_types.get(enemy_type)
+        if enemy_class:
+            return enemy_class()
+        else:
+            raise ValueError(f"Type d'ennemi inconnu: {enemy_type}")
+        
+    def register_enemy(self, enemy_type, enemy_class):
+        self.enemy_types[enemy_type] = enemy_class
