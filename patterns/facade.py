@@ -17,10 +17,14 @@ class FacadeInterface:
         self.foret.add_connection("sud", self.village)
         self.foret.add_connection("nord", self.donjon)
         
+        self.recompense = "Clé du Donjon"
+        
         self.event1 = CombatEvent(EnemyType.Bandit, "Un bandit surgit des buissons!")
+        self.event2 = CoffreEvent(self.recompense)
         self.event3 = MarchandEvent()
         
         self.foret.add_event(self.event1)
+        self.donjon.add_event(self.event2)
         self.village.add_event(self.event3)
         
         name_perso = input("Entrez votre nom de personnage : ")
@@ -51,10 +55,12 @@ class FacadeInterface:
 
             sorties = ", ".join(current.connected_zones.keys())
             print(f"Sorties : {sorties}")
-            choix = input("Action (direction ou 'quitter') : ").lower()
+            choix = input("Action (direction, inventaire 'quitter') : ").lower()
 
             if choix == "quitter":
                 break
+            elif choix == "inventaire":
+                print(f"Inventaire de {self.player.name} : {[item.name for item in self.player.inventory]}")
             elif choix in current.connected_zones:
                 cmd = Deplacer(self.player, choix)
                 self.invoker.setCommand(cmd)

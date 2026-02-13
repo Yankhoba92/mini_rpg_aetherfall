@@ -2,6 +2,7 @@ from enum import Enum
 from abc import ABC, abstractmethod
 import random
 
+from models.items import ItemFactory
 from patterns.enemy import EnemyFactory
 
 class EventType(Enum):
@@ -46,13 +47,26 @@ class CoffreEvent(Event):
         self.opened = False
     
     def trigger(self, player):
-        if not self.opened:
+        if self.opened:
             self.opened = True
             print(f"Le coffre a été ouvert par {player.name}!")
             return self.recompense
         else:
-            print("Le coffre est déjà ouvert.")
-            return None
+            print("Le coffre est fermé.")
+            choix = input("Voulez-vous l'ouvrir? (oui/non) ").lower()
+            if choix == "oui":
+                self.opened = True
+                print(f"{player.name} a ouvert le coffre et trouve : {self.recompense}!")
+                
+                item = ItemFactory.createItem(self.recompense, consommable=True)
+                
+                player.takeItem(item)
+                return self.recompense
+            else:
+                print("Vous décidez de ne pas ouvrir le coffre.")
+                return None
+            
+
     
     def recompense_random(self):
         items = ["Potion de soin", "Épée en fer", "Armure légère", "Anneau de force"]

@@ -41,6 +41,9 @@ class Bombe(Item):
     def explode(self, player, target):
         print(f"Hero a utilisé une {self.name} et a causé une explosion sur {target.name}!")
 
+class ClefDuDonjon(Item):
+    def __init__(self, name: str = "Clé du Donjon", consommable: bool = False):
+        super().__init__(name, consommable)
     
 class ItemFactory(Item):
     
@@ -57,6 +60,8 @@ class ItemFactory(Item):
         elif name == "armure":
             return Armure(name, consommable, defense, magic_defense)
         elif name == "item":
+            return Item(name, consommable)
+        elif name == "Clé du Donjon":
             return Item(name, consommable)
         else: 
             raise ValueError("Invalid item name")

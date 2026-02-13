@@ -17,7 +17,7 @@ class Zone:
         return self.name
 
     def random_event(self, player):
-        if self.event_list and random.random() < 0.4:
+        # if self.event_list and random.random() < 0.4:
             event = random.choice(self.event_list)
             print(f"[Événement] {event.get_description()}  \n")
             event.trigger(player)
