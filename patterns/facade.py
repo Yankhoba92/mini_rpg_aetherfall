@@ -3,6 +3,8 @@
 from models.character import Guerrier, Mage, Player
 from models.zone import Donjon, Foret, Village, Zone
 from patterns.command import Deplacer, Invoker
+from patterns.enemy import EnemyType
+from patterns.event import CoffreEvent, CombatEvent, MarchandEvent
 
 
 class FacadeInterface:
@@ -14,6 +16,12 @@ class FacadeInterface:
         self.village.add_connection("nord", self.foret)
         self.foret.add_connection("sud", self.village)
         self.foret.add_connection("nord", self.donjon)
+        
+        self.event1 = CombatEvent(EnemyType.Bandit, "Un bandit surgit des buissons!")
+        self.event3 = MarchandEvent()
+        
+        self.foret.add_event(self.event1)
+        self.village.add_event(self.event3)
         
         name_perso = input("Entrez votre nom de personnage : ")
         self.player = Player(name_perso)

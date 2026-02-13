@@ -20,7 +20,7 @@ class Zone:
         if self.event_list and random.random() < 0.4:
             event = random.choice(self.event_list)
             print(f"[Événement] {event.get_description()}  \n")
-            event.declencher(player)
+            event.trigger(player)
 
     def can_acces(self, player):
         return True

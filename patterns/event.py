@@ -1,7 +1,8 @@
 from enum import Enum
 from abc import ABC, abstractmethod
 import random
-from enemy import EnemyFactory
+
+from patterns.enemy import EnemyFactory
 
 class EventType(Enum):
     COMBAT = "combat"
@@ -26,7 +27,8 @@ class CombatEvent(Event):
     def __init__(self, enemy_type, description):
         super().__init__(
             event_type = EventType.COMBAT,
-            description = f"Un {enemy_type.value} vous attaque!")
+            description = f"Un {enemy_type} vous attaque!")
+        self.enemy_type = enemy_type
         
     def trigger(self, player):
         print(f"Le joueur {player.name} apparait")
